@@ -1,0 +1,32 @@
+
+<div *ngIf="usuarioLogado !=null">
+  Você está logado como : {{usuarioLogado.nome}}
+  <br>
+  <button (click)="limpar()">Deslogar</button>
+  <br>
+  <h1>USUARIOS</h1>
+  <div class="w-100">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Login</th>
+          <th scope="col">Senha</th>
+          <th scope="col">Saldo</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of usuarios">
+          <td>{{item.nome}}</td>
+          <td>{{item.login}}</td>
+          <td>{{item.senha}}</td>
+          <td>{{item.saldoBancario |currency:'R$'}}</td>
+          <td><button class="btn btn-outline-danger btn-sm">Excluir</button></td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
