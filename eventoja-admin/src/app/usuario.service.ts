@@ -9,11 +9,14 @@ export class UsuarioService {
   public usuarioLogado: Usuario  = null as any;
   constructor(private http: HttpClient) {
     const usuario = localStorage.getItem('usuario');
+    if(usuario != null){
+      this.usuarioLogado = JSON.parse(usuario);
+    }
 
   }
 
   async  login(usuario:string,senha:string) {
-   const usuarioApi = this.http
+   const usuarioApi = await this.http
    .post<Usuario>('http://localhost:5153/api/Usuario/login',{
      login:usuario,
      senha:senha,
@@ -30,7 +33,11 @@ export class UsuarioService {
   }
   async BuscarTodos() {
     return this.http
-      .get<Usuario[]>('http://localhost:5153/api/Usuario/buscar-todos')
+      .get<Usuario[]>('http://localhost:5153/api/Usuario/buscar-todos',{
+        headers:{
+          "token":"token-acesso"
+        }
+      })
       .toPromise();
   }
   async Deslogar() {

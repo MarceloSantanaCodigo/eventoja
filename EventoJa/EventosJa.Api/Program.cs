@@ -1,3 +1,6 @@
+using Dapper.Contrib.Extensions;
+using EventosJa.Api.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,9 +29,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+SqlMapperExtensions.TableNameMapper = (type) => type.Name;
+
 app.UseCors("AllowAll");
 app.UseAuthorization();
-
+app.UseMiddleware(typeof(AutenticacaoMiddleware));
 app.MapControllers();
 
 app.Run();
